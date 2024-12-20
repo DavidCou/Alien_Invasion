@@ -9,7 +9,7 @@ class AlienInvaion:
         pygame.init()
         
         # Sets the game window size and caption 
-        self.screen = pygame.display.set_mode((800,800))
+        self.screen = pygame.display.set_mode((900,700))
         pygame.display.set_caption("Alien Invasion")
 
     def run_game(self):
