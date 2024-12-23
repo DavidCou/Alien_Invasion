@@ -1,6 +1,7 @@
 import sys # Needed to quit the game
 import pygame # Needed to run the game
 from settings import Settings
+from ship import Ship
 
 class AlienInvaion:
     """Main class to manage game game assets and behavior."""
@@ -17,6 +18,8 @@ class AlienInvaion:
                                                self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion")
 
+        self.ship = Ship(self)
+
     def run_game(self):
         """Start the main loop for the game."""
         while True:
@@ -28,12 +31,13 @@ class AlienInvaion:
             
             # Redraw the screen during each pass through the loop.
             self.screen.fill(self.settings.bg_color)
+            self.ship.blitme()
 
             # Make the most recently drawn screen visable.
             pygame.display.flip()
             # Sets the desired frame rate, 
-            # should work well on most systems but may needed to be left out 
-            # completely on select systems 
+            # should work well on most systems but may needed to be removed 
+            # on select systems for the frame rate to run smoothly 
             self.clock.tick(60)
 if __name__ == '__main__':
     # Make a game instance, and run the game.
