@@ -14,7 +14,7 @@ class Ship:
 
         # Start each new ship at the bottom center of the screen.
         # Note to self: When adjusting the x, y coords, pygame 
-        # uses the top left corner of the rect as the point of reference
+        # uses the top left corner of the rect as the point of reference.
         self.rect.midbottom = self.screen_rect.midbottom
 
     def blitme(self):
