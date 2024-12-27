@@ -6,6 +6,7 @@ class Ship:
     def __init__(self, ai_game):
         """Initialize the ship and set its starting position."""
         self.screen = ai_game.screen
+        self.settings = ai_game.settings
         self.screen_rect = ai_game.screen.get_rect()
 
         # Load the ship image and get its rect.
@@ -16,6 +17,23 @@ class Ship:
         # Note to self: When adjusting the x, y coords, pygame 
         # uses the top left corner of the rect as the point of reference.
         self.rect.midbottom = self.screen_rect.midbottom
+
+        # Use a float for the ship speed for finer speed control.
+        self.x = float(self.rect.x)
+
+        # Movement flags; starts with a ship that is not moving.
+        self.moving_right = False
+        self.moving_left = False
+
+    def update(self):
+        """Update the ship's position based on the movement flags."""
+        # Update the ship's x value first, then the rect position.
+        if self.moving_right and self.rect.right < self.screen_rect.right:
+            self.x += self.settings.ship_speed
+        if self.moving_left and self.rect.left > 0:
+            self.x -= self.settings.ship_speed
+
+        self.rect.x = self.x     
 
     def blitme(self):
         """Draw the ship at its current location."""
