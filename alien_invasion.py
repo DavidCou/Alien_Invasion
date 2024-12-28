@@ -34,21 +34,10 @@ class AlienInvaion:
         while True:
             self._check_events()
             self.ship.update()
-            self.bullets.update()
-
-            # Get rid of bullets that have disappeared.
-            # Note: A copy of the bullet group is created in the for loop 
-            # so that the bullets can be removed from the bullet group while 
-            # the loop is running otherwise the the bullets will not be able 
-            # to be removed using this method.
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:
-                    self.bullets.remove(bullet)   
-
+            self._update_bullets()
             self._update_screen()
-            
-            # Set the desired frame rate, 
-            # should work well on most systems but may need to be removed 
+            # Limits the frame rate to 60 fps.
+            # Should work well on most systems but may need to be removed 
             # on select systems to improve game performance. 
             self.clock.tick(60)
 
@@ -84,8 +73,23 @@ class AlienInvaion:
 
     def _fire_bullet(self):
         """Create a new bullet and add it to the bullets group."""
-        new_bullet = Bullet(self)
-        self.bullets.add(new_bullet)
+        if len(self.bullets) < self.settings.bullets_allowed:
+            new_bullet = Bullet(self)
+            self.bullets.add(new_bullet)
+
+    def _update_bullets(self):
+        """Update position of bullets and get rid of old bullets."""
+        # Update bullet positions.
+        self.bullets.update()
+        
+        # Get rid of bullets that have disappeared.
+        # Note to self: A copy of the bullet group is created in the for loop 
+        # so that the bullets can be removed from the bullet group while 
+        # the loop is running otherwise the the bullets will not be able 
+        # to be removed using this method.
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet) 
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen."""
