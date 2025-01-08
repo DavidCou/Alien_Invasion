@@ -83,6 +83,9 @@ class AlienInvaion:
         """Start a new game when the player clicks Play."""
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_active:
+            # Reset the game settings.
+            self.settings.initialize_dynamic_settings()
+
             # Reset the game statistics.
             self.stats.reset_stats()
 
@@ -149,6 +152,7 @@ class AlienInvaion:
            # Destroy existing bullets and create new fleet.
            self.bullets.empty()
            self._create_fleet()
+           self.settings.increase_speed()
 
     def _update_aliens(self):
         """Check if the fleet is at an edge, then update positions."""
